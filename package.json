@@ -4,7 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon --ext js,graphql --exec babel-node src/server.js"
+    "dev": "nodemon --ext js,graphql --exec babel-node src/server.js",
+    "get-schema": "graphql get-schema -p prisma"
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",
@@ -13,7 +14,9 @@
     "nodemon": "^1.18.10"
   },
   "dependencies": {
+    "graphql-cli": "^3.0.11",
     "graphql-yoga": "^1.17.4",
-    "prisma": "^1.32.2"
+    "prisma": "^1.32.2",
+    "prisma-binding": "^2.3.11"
   }
 }
