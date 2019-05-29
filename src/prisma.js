@@ -48,30 +48,40 @@ const prisma = new Prisma({
 //   .catch(err => console.log(err));
 
 // Async / Await
-// const createPostForUser = async (authorId, data) => {
-//   const post = await prisma.mutation.createPost({
-//     data: {
-//       ...data,
-//       author: {
-//         connect: {
-//           id: authorId
-//         }
-//       }
-//     }
-//   }, '{ id }');
+const createPostForUser = async (authorId, data) => {
 
-//   const user = await prisma.query.user(
-//     {
-//       where: {
-//         id: authorId
-//       }
-//     },
-//     '{ id name posts { id title } }'
-//   )
-//   return user;
-// }
+  const userExists = await prisma.exists.User(
+    {
+      id: authorId
+    }
+  ) 
+
+  if (!userExists) throw new Error("User not found.");
+
+  const post = await prisma.mutation.createPost({
+    data: {
+      ...data,
+      author: {
+        connect: {
+          id: authorId
+        }
+      }
+    }
+  }, '{ id title body published author { id name email posts { id title published } } }');
+
+  return post.author;
+}
 
 const updatePostForUser = async (postId, data) => {
+
+  const postExists = await prisma.exists.Post(
+    {
+      id: postId
+    }
+  )
+
+  if (!postExists) throw new Error('Post not found.');
+
   const post = await prisma.mutation.updatePost(
     {
       where: {
@@ -81,28 +91,28 @@ const updatePostForUser = async (postId, data) => {
         ...data
       }
     },
-    '{ author { id } }'
+    '{ author { id name posts { id title published }} }'
   );
 
-  const user = await prisma.query.users(
-    {
-      where: {
-        id: post.author.id
-      }
-    },
-    '{ id name posts { id title body } }'
-  );
-  return user;
+  return post.author;
 }
 
-// createPostForUser('cjvmisn3k00or0779m2i8m6d3', { title: 'This is new post', body: 'This is body', published: true })
+// createPostForUser('cjvmisn3k00or0779m2i8m6d3', { title: 'This is new post222', body: 'This is body', published: true })
 //   .then(user => console.log(user))
 //   .catch(err => console.log(err));
 
-updatePostForUser('cjw97u85f00rc0758eccp5yzx', 
+updatePostForUser('cjw97u85f00rc0758eccp5yzxa', 
   {
-    body: 'Best post'
+    title: 'Best post'
   },
 )
   .then(user => console.log(JSON.stringify(user, null, 2)))
   .catch(err => console.log(err))
+
+// prisma.exists.Post(
+//   {
+//     id: "cjw97u85f00rc0758eccp5yzx"
+//   }
+// )
+//   .then(exists => console.log(exists))
+//   .catch(err => console.log(err));
