@@ -2,7 +2,7 @@ import { GraphQLServer, PubSub } from 'graphql-yoga';
 import db from './db';
 import resolvers from './resolvers';
 
-import './prisma'
+import prisma from './prisma'
 
 const pubsub = new PubSub();
 
@@ -12,7 +12,8 @@ const server = new GraphQLServer(
     resolvers,
     context: {
       db,
-      pubsub
+      pubsub,
+      prisma
     }
   }
 );

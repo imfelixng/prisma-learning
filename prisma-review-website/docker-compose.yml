@@ -15,7 +15,7 @@ services:
             connector: postgres
             host: host.docker.internal
             database: prisma
-            schema: public
+            schema: review
             user: postgres
             password: annq
             ssl: false

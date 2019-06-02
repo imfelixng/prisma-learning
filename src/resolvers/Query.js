@@ -1,12 +1,12 @@
 const Query = {
-  users(parent, args, ctx, info) {
-    return ctx.db.users;
+  users(parent, args, { prisma }, info) {
+    return prisma.query.users(null, info);
   },
-  posts(parent, args, ctx, info) {
-    return ctx.db.posts;
+  posts(parent, args, { prisma }, info) {
+    return prisma.query.posts(null, info);
   },
-  comments(parent, args, ctx, info) {
-    return ctx.db.comments;
+  comments(parent, args, { prisma }, info) {
+    return prisma.query.comments(null, info);
   }
 };
 
