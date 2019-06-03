@@ -89,10 +89,10 @@ enum MutationType { # khai bao cac truong se co, group lai trong object
 
 type PostSubscriptionPayload {
   mutation: MutationType!
-  data: Post!
+  node: Post
 }
 
 type CommentSubscriptionPayload {
   mutation: MutationType!
-  data: Comment!
+  node: Comment
 }
