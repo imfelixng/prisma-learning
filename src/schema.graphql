@@ -6,7 +6,7 @@ type Query {
 }
 
 type Mutation {
-  createUser(data: CreateUserInput!): User!
+  createUser(data: CreateUserInput!): AuthPayload!
   createPost(data: CreatePostInput!): Post!
   createComment(data: CreateCommentInput!): Comment!
   deleteUser(id: ID!): User!
@@ -20,6 +20,11 @@ type Mutation {
 type Subscription {
   comment(postID: ID!): CommentSubscriptionPayload!
   post: PostSubscriptionPayload!
+}
+
+type AuthPayload {
+  token: String!
+  user: User!
 }
 
 input CreateUserInput {
