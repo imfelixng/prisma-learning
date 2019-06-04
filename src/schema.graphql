@@ -15,6 +15,7 @@ type Mutation {
   updateUser(id: ID!, data: UpdateUserInput!): User!
   updatePost(id: ID!, data: UpdatePostInput!): Post!
   updateComment(id: ID!, data: UpdateCommentInput!): Comment!
+  login(data: LoginInput!): AuthPayload!
 }
 
 type Subscription {
@@ -25,6 +26,11 @@ type Subscription {
 type AuthPayload {
   token: String!
   user: User!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
 }
 
 input CreateUserInput {

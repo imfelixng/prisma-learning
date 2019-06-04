@@ -68,6 +68,22 @@ const Mutation = {
   },
   async updateComment(parent, args, { prisma }, info) {
     return prisma.mutation.updateComment({ where: { id: args.id }, data: args.data }, info);
+  },
+  async login(parent, args, { prisma }, info) {
+    const { email, password } = args.data;
+    const user = await prisma.query.user( { where: { email } });
+    if (!user) throw new Error('User not found');
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) throw new Error('Email or password is not valid')
+
+    const token = jwt.sign({ userId: user.id }, 'mysupersecret');
+
+    return {
+      user,
+      token
+    }
+
   }
 };
 
