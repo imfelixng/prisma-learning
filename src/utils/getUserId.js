@@ -8,6 +8,7 @@ const getUserId = (request) => {
   }
 
   const token = authorization.replace('Bearer ', '');
+
   const decoded = jwt.verify(token, 'mysupersecret');
 
   return decoded.userId;
