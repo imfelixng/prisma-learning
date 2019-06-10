@@ -1,3 +1,5 @@
+import getUserId from '../utils/getUserId';
+
 const Query = {
   users(parent, args, { prisma }, info) { // Default prisma use info for nest type
     const opArgs = {}
@@ -35,6 +37,32 @@ const Query = {
   comments(parent, args, { prisma }, info) {
     return prisma.query.comments(null, info);
   },
+  post: async (parent, args, { prisma, request }, info) => {
+    const userId = getUserId(request, false);
+    console.log(userId);
+    const posts = await prisma.query.posts({
+      where: {
+        id: args.id,
+        OR: [
+          {
+            published: true
+          },
+          {
+            author: {
+              id: userId
+            }
+          }
+        ]
+      }
+    }, info);
+
+    if (posts.length === 0) {
+      throw new Error("Post not found");
+    }
+
+    return posts[0];
+
+  }
 };
 
 export default Query;
