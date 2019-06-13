@@ -1,5 +1,6 @@
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
+
+import generateToken from '../utils/generateToken';
 import getUserId from '../utils/getUserId';
 
 const Mutation = {
@@ -19,7 +20,7 @@ const Mutation = {
 
     return {
       user,
-      token: jwt.sign({ userId: user.id }, 'mysupersecret')
+      token: generateToken( { userId: user.id })
     }
 
   },
@@ -161,7 +162,7 @@ const Mutation = {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) throw new Error('Email or password is not valid')
 
-    const token = jwt.sign({ userId: user.id }, 'mysupersecret');
+    const token =  generateToken({ userId: user.id });
 
     return {
       user,
