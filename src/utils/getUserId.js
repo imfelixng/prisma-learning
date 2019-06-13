@@ -1,10 +1,10 @@
 import jwt from 'jsonwebtoken';
 
 const getUserId = (request, requireAuth = true) => {
-  const { headers: { authorization } } = request;
+  const header = request.request ? request.request.headers.authorization : request.connection.context.authorization
 
-  if (authorization) {
-    const token = authorization.replace('Bearer ', '');
+  if (header) {
+    const token = header.replace('Bearer ', '');
 
     const decoded = jwt.verify(token, 'mysupersecret');
   

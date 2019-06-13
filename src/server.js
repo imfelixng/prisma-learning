@@ -15,7 +15,7 @@ const server = new GraphQLServer(
         db,
         pubsub,
         prisma,
-        ...request
+        request
       }
     }
   }

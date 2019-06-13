@@ -23,6 +23,7 @@ type Mutation {
 type Subscription {
   comment(postID: ID!): CommentSubscriptionPayload!
   post: PostSubscriptionPayload!
+  myPosts: MyPostSubscriptionPayload!
 }
 
 type AuthPayload {
@@ -108,4 +109,9 @@ type PostSubscriptionPayload {
 type CommentSubscriptionPayload {
   mutation: MutationType!
   node: Comment
+}
+
+type MyPostSubscriptionPayload {
+  mutation: MutationType!
+  node: Post
 }
