@@ -2,7 +2,10 @@ import getUserId from '../utils/getUserId';
 
 const Query = {
   users(parent, args, { prisma }, info) { // Default prisma use info for nest type
-    const opArgs = {}
+    const opArgs = {
+      first: args.first || 5,
+      skip: args.skip || 0
+    }
 
     if (args.query) {
       opArgs.where = {
@@ -17,6 +20,8 @@ const Query = {
   },
   posts(parent, args, { prisma }, info) {
     const opArgs = {
+      first: args.first || 5,
+      skip: args.skip || 0,
       where: {
         published: true,
       }
