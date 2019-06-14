@@ -7,6 +7,8 @@ type User {
   password: String!
   posts: [Post!]! @relation(name: "PostToUser", onDelete: CASCADE) # Custom relationship, delete all post when user deleted
   comments: [Comment!]! @relation(name: "CommentToUser", onDelete: CASCADE)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
 
 type Post {
@@ -16,6 +18,8 @@ type Post {
   published: Boolean!
   author: User! @relation(name: "PostToUser", onDelete: SET_NULL) # Custom relationship, set post in author is NULL
   comments: [Comment!]! @relation(name: "CommentToPost", onDelete: CASCADE)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
 
 type Comment {
@@ -23,4 +27,6 @@ type Comment {
   text: String!
   author: User! @relation(name: "CommentToUser", onDelete: SET_NULL)
   post: Post! @relation(name: "CommentToPost", onDelete: SET_NULL)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
