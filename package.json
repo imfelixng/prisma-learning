@@ -6,14 +6,16 @@
   "scripts": {
     "start": "env-cmd -f ./config/prod.env node dist/server.js",
     "heroku-postbuild": "babel src --out-dir dist --copy-files",
-    "dev": "env-cmd -f ./config/dev.env nodemon --ext js,graphql --exec babel src/server.js",
-    "get-schema": "graphql get-schema -p prisma"
+    "dev": "env-cmd -f ./config/dev.env nodemon --ext js,graphql --exec babel-node src/server.js",
+    "get-schema": "graphql get-schema -p prisma",
+    "test": "jest"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.3",
     "@babel/node": "^7.2.2",
     "@babel/preset-env": "^7.4.3",
+    "jest": "^24.8.0",
     "nodemon": "^1.18.10"
   },
   "dependencies": {
