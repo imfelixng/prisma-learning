@@ -4,24 +4,27 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon --ext js,graphql --exec babel-node src/server.js",
+    "start": "env-cmd -f ./config/prod.env node dist/server.js",
+    "heroku-postbuild": "babel src --out-dir dist --copy-files",
+    "dev": "env-cmd -f ./config/dev.env nodemon --ext js,graphql --exec babel src/server.js",
     "get-schema": "graphql get-schema -p prisma"
   },
   "devDependencies": {
+    "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.3",
     "@babel/node": "^7.2.2",
     "@babel/preset-env": "^7.4.3",
     "nodemon": "^1.18.10"
   },
   "dependencies": {
-    "add": "^2.0.6",
+    "@babel/polyfill": "^7.4.4",
     "bcryptjs": "^2.4.3",
+    "env-cmd": "^9.0.3",
     "graphql-cli": "^3.0.11",
     "graphql-import": "^0.7.1",
     "graphql-yoga": "^1.17.4",
     "jsonwebtoken": "^8.5.1",
     "prisma": "^1.32.2",
-    "prisma-binding": "^2.3.11",
-    "yarn": "^1.16.0"
+    "prisma-binding": "^2.3.11"
   }
 }

@@ -20,7 +20,7 @@ var models = [
 exports.Prisma = prisma_lib_1.makePrismaClientClass({
   typeDefs,
   models,
-  endpoint: `http://localhost:4466`,
+  endpoint: `https://ngquangan-blog-8ef757a733.herokuapp.com/prisma-learning/prod`,
   secret: `thisismysupersecret`
 });
 exports.prisma = new exports.Prisma();

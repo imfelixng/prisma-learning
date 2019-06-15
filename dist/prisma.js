@@ -1,20 +1,23 @@
-import { Prisma } from 'prisma-binding';
-import { fragmentReplacements } from './resolvers';
-const prisma = new Prisma({
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _prismaBinding = require("prisma-binding");
+
+var _resolvers = require("./resolvers");
+
+var prisma = new _prismaBinding.Prisma({
   typeDefs: 'src/generated/prisma.graphql',
   endpoint: process.env.PRISMA_ENDPOINT,
-  secret:  'thisismysupersecret',
-  fragmentReplacements,
-});
-
-export { prisma as default }
-
-// Promise
-
+  secret: 'thisismysupersecret',
+  fragmentReplacements: _resolvers.fragmentReplacements
+}); // Promise
 // prisma.query.comments(null, '{ id text author { id name } }')
 //   .then(data => console.log(data))
 //   .catch(err => console.log(err));
-
 // prisma.mutation.createPost(
 //   {
 //     data: {
@@ -32,7 +35,6 @@ export { prisma as default }
 // )
 //   .then(data => console.log(data))
 //   .catch(err => console.log(err));
-
 // prisma.mutation.updatePost(
 //   {
 //     data: {
@@ -50,18 +52,14 @@ export { prisma as default }
 //   })
 //   .then(data => console.log(data))
 //   .catch(err => console.log(err));
-
 // Async / Await
 // const createPostForUser = async (authorId, data) => {
-
 //   const userExists = await prisma.exists.User(
 //     {
 //       id: authorId
 //     }
 //   ) 
-
 //   if (!userExists) throw new Error("User not found.");
-
 //   const post = await prisma.mutation.createPost({
 //     data: {
 //       ...data,
@@ -72,20 +70,15 @@ export { prisma as default }
 //       }
 //     }
 //   }, '{ id title body published author { id name email posts { id title published } } }');
-
 //   return post.author;
 // }
-
 // const updatePostForUser = async (postId, data) => {
-
 //   const postExists = await prisma.exists.Post(
 //     {
 //       id: postId
 //     }
 //   )
-
 //   if (!postExists) throw new Error('Post not found.');
-
 //   const post = await prisma.mutation.updatePost(
 //     {
 //       where: {
@@ -97,14 +90,11 @@ export { prisma as default }
 //     },
 //     '{ author { id name posts { id title published }} }'
 //   );
-
 //   return post.author;
 // }
-
 // createPostForUser('cjvmisn3k00or0779m2i8m6d3', { title: 'This is new post222', body: 'This is body', published: true })
 //   .then(user => console.log(user))
 //   .catch(err => console.log(err));
-
 // updatePostForUser('cjw97u85f00rc0758eccp5yzxa', 
 //   {
 //     title: 'Best post'
@@ -112,7 +102,6 @@ export { prisma as default }
 // )
 //   .then(user => console.log(JSON.stringify(user, null, 2)))
 //   .catch(err => console.log(err))
-
 // prisma.exists.Post(
 //   {
 //     id: "cjw97u85f00rc0758eccp5yzx"
@@ -120,3 +109,5 @@ export { prisma as default }
 // )
 //   .then(exists => console.log(exists))
 //   .catch(err => console.log(err));
+
+exports["default"] = prisma;
