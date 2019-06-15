@@ -27,7 +27,7 @@ const Query = {
       after: args.after,
       orderBy: args.orderBy,
       where: {
-        published: false,
+        published: true,
       }
     };
     if (args.query) {
