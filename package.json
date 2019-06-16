@@ -12,7 +12,7 @@
     "heroku-postbuild": "babel src --out-dir dist --copy-files",
     "dev": "env-cmd -f ./config/dev.env nodemon --ext js,graphql --exec babel-node src/index.js",
     "get-schema": "graphql get-schema -p prisma",
-    "test": "env-cmd -f ./config/dev.env jest --watch"
+    "test": "env-cmd -f ./config/dev.env jest --watch --runInBand"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
