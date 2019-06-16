@@ -20,11 +20,19 @@
     "@babel/node": "^7.2.2",
     "@babel/preset-env": "^7.4.3",
     "@babel/register": "^7.4.4",
+    "apollo-link-http": "^1.5.15",
+    "cross-fetch": "^3.0.4",
     "jest": "^24.8.0",
-    "nodemon": "^1.18.10"
+    "nodemon": "^1.18.10",
+    "unfetch": "^4.1.0"
   },
   "dependencies": {
+    "@babel/plugin-transform-regenerator": "^7.4.5",
+    "@babel/plugin-transform-runtime": "^7.4.4",
     "@babel/polyfill": "^7.4.4",
+    "@babel/runtime": "^7.4.5",
+    "apollo-boost": "^0.4.2",
+    "babel-plugin-transform-runtime": "^6.23.0",
     "bcryptjs": "^2.4.3",
     "env-cmd": "^9.0.3",
     "graphql-cli": "^3.0.11",
