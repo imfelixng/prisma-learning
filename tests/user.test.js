@@ -1,34 +1,33 @@
 import "cross-fetch/polyfill";
-import { gql } from "apollo-boost";
 
 import prisma from "../src/prisma.js";
-import seedDB, { userOne } from './utils/seedDB';
-import getClient from './utils/getClient';
+import seedDB, { userOne } from "./utils/seedDB";
+import getClient from "./utils/getClient";
+
+import  {
+  createUser,
+  getUsers,
+  login,
+  getProfile
+} from './utils/operations';
+
 
 const client = getClient();
 
 beforeEach(seedDB);
 
 test("should be create new user", async () => {
-  const createUser = gql`
-    mutation {
-      createUser(
-        data: {
-          name: "ngquangan"
-          email: "ngquangan@gmail.com"
-          password: "test123456"
-        }
-      ) {
-        user {
-          id
-        }
-        token
-      }
+  const variables = {
+    data: {
+      name: "An",
+      email: "ngquangan1234@gmail.com",
+      password: "ngquangan"
     }
-  `;
+  };
 
   const response = await client.mutate({
-    mutation: createUser
+    mutation: createUser,
+    variables
   });
 
   const exists = await prisma.exists.User({
@@ -38,16 +37,6 @@ test("should be create new user", async () => {
 });
 
 test("should expose public author profiles", async () => {
-  const getUsers = gql`
-    query {
-      users {
-        id
-        email
-        name
-      }
-    }
-  `;
-
   const response = await client.query({
     query: getUsers
   });
@@ -58,63 +47,45 @@ test("should expose public author profiles", async () => {
 });
 
 test("should not login with bad credentials", async () => {
-  const login = gql`
-    mutation {
-      login(
-        data: { email: "ngquangan.demo@gmail.com", password: "test1234567" }
-      ) {
-        token
-      }
+  const variables = {
+    data: {
+      email: "ngquangan@gmail.com",
+      password: "123456789"
     }
-  `;
-
+  };
   await expect(
     client.mutate({
-      mutation: login
+      mutation: login,
+      variables
     })
   ).rejects.toThrow();
 });
 
 test("should not sign up with short password", async () => {
-  const signup = gql`
-    mutation {
-      createUser(
-        data: {
-          name: "An",
-          email: "ngquangan123@gmail.com",
-          password: "123456"
-        }
-      ) {
-        token
-      }
+  const variables = {
+    data: {
+      name: "An",
+      email: "ngquangan123@gmail.com",
+      password: "123456"
     }
-  `;
+  };
 
   await expect(
     client.mutate({
-      mutation: signup
+      mutation: createUser,
+      variables
     })
   ).rejects.toThrow();
 });
 
-test('should fetch user profile', async () => {
-  const client = getClient(userOne.jwt)
-  const getProfile = gql`
-    query {
-      me {
-        id
-        name
-        email
-      }
-    }
-  `;
+test("should fetch user profile", async () => {
+  const client = getClient(userOne.jwt);
 
   const response = await client.query({
     query: getProfile
   });
 
-  expect(response.data.me.id).toBe(userOne.user.id)
-  expect(response.data.me.name).toBe(userOne.user.name)
-  expect(response.data.me.email).toBe(userOne.user.email)
-})
-
+  expect(response.data.me.id).toBe(userOne.user.id);
+  expect(response.data.me.name).toBe(userOne.user.name);
+  expect(response.data.me.email).toBe(userOne.user.email);
+});
