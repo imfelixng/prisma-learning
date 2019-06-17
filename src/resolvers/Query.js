@@ -105,8 +105,6 @@ const Query = {
       ]
     }
 
-    console.log(opArgs);
-
     return prisma.query.posts(opArgs, info);
 
   }
